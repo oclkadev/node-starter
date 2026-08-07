@@ -36,4 +36,8 @@ describe('toSentence', () => {
   it('handles single character', () => {
     expect(toSentence('a')).toBe('A.');
   });
+
+  it('adds period when punctuation appears mid-text but not at end', () => {
+    expect(toSentence('hello.world')).toBe('Hello.world.');
+  });
 });

@@ -180,7 +180,7 @@ describe('table', () => {
 
     io.table([['a', 'b']], { separator: ' | ' });
 
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('a'));
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('a | b'));
   });
 
   it('does not call console.log when quiet', () => {

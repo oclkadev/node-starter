@@ -49,11 +49,21 @@ describe('formatErrorMessage', () => {
   it('does not add trailing period if ends with !', () => {
     expect(formatErrorMessage('watch out!')).toBe('Watch out!');
   });
+
+  it('does not strip error: when it appears mid-text', () => {
+    expect(formatErrorMessage('my error: fail')).toBe('My error: fail.');
+  });
 });
 
 describe('getErrorMessage', () => {
   it('returns message from Error instance', () => {
     expect(getErrorMessage(new Error('boom'))).toBe('boom');
+  });
+
+  it('returns raw message from Error with non-string message property', () => {
+    const err = new Error('placeholder');
+    Object.defineProperty(err, 'message', { value: 42, configurable: true });
+    expect(getErrorMessage(err)).toBe(42 as unknown as string);
   });
 
   it('returns message from object with string message property', () => {

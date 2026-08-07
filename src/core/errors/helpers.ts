@@ -1,10 +1,7 @@
 import { toSentence } from '@/core/helpers';
 
 export function formatErrorMessage(message: string): string {
-  let cleaned = message.trim();
-  if (!cleaned) return 'Unknown error.';
-
-  cleaned = cleaned.replace(/^(error:\s*)+/i, '').trim();
+  const cleaned = message.trim().replace(/^(error:\s*)+/i, '');
   if (!cleaned) return 'Unknown error.';
 
   if (cleaned.startsWith('{') || cleaned.startsWith('[')) {
