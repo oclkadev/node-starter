@@ -1,0 +1,38 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Files
+.agent
+.devin
+.ops
+diff.md
+logs.md
+pr.md
+
+# Build
+dist/
+*.tsbuildinfo
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Test
+.stryker-tmp/
+coverage/
+reports/
+
+# Logs
+*.log
+
+# Environment
+.env*
+!.env.example
+
+# vscode
+.vscode/*
+!.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Misc
+.DS_Store

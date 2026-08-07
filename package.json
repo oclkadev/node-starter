@@ -1,0 +1,77 @@
+{
+  "name": "@oclka/node-starter",
+  "version": "0.0.0",
+  "description": "Fast TS starter for Node.js libraries and CLI tools.",
+  "scripts": {
+    "build": "tsup src/index.ts",
+    "dev": "NODE_ENV=development tsx src/index.ts"
+  },
+  "author": {
+    "name": "oclkadev",
+    "email": "hello@oclka.dev",
+    "url": "https://oclka.dev"
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "typescript",
+    "starter",
+    "template",
+    "boilerplate",
+    "scaffold",
+    "library",
+    "cli",
+    "cli-app",
+    "esm",
+    "cjs",
+    "tsup",
+    "pnpm",
+    "command-line",
+    "terminal"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oclkadev/node-starter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oclkadev/node-starter/issues"
+  },
+  "homepage": "https://github.com/oclkadev/node-starter#readme",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist",
+    "docs"
+  ],
+  "bin": {
+    "node-starter": "./dist/index.mjs"
+  },
+  "packageManager": "pnpm@11.20.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "tsup": "^8.5.1",
+    "tsx": "^4.23.9",
+    "typescript": "6.0.3"
+  }
+}
