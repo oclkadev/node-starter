@@ -1,6 +1,6 @@
 {
   "name": "@oclkadev/node-starter",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Fast TS starter for Node.js libraries and CLI tools.",
   "keywords": [
     "node",
@@ -96,12 +96,19 @@
       "cspell --no-must-find-files"
     ]
   },
+  "dependencies": {
+    "commander": "^15.0.0",
+    "figures": "^6.1.0",
+    "picocolors": "^1.1.1",
+    "text-table": "^0.2.0"
+  },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
     "@changesets/cli": "^2.31.1",
     "@commitlint/config-conventional": "^21.2.0",
     "@size-limit/preset-small-lib": "^13.0.3",
     "@types/node": "^26.1.2",
+    "@types/text-table": "^0.2.5",
     "commitizen": "^4.3.2",
     "commitlint": "^21.2.1",
     "cspell": "^10.0.1",

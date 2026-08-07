@@ -12,5 +12,5 @@ export default {
     'pnpm-lock.yaml',
   ],
   language: 'en,fr',
-  words: ['oclkadev'],
+  words: ['hsep', 'oclkadev'],
 };

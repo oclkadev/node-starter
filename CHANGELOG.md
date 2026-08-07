@@ -1,5 +1,11 @@
 # @oclkadev/node-starter
 
+## 0.3.0
+
+### Minor Changes
+
+- 23a273c: Add CLI scaffold with Commander: command structure (`commands/`), shared options, centralized I/O layer (`io` with quiet/verbose/dryRun), typed error handling (`AppError`, `ErrorCode`, `formatErrorMessage`, `getErrorMessage`), string helpers, and entry point with formatted error output.
+
 ## 0.2.0
 
 ### Minor Changes

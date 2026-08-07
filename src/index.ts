@@ -1,21 +1,13 @@
-/**
- * Main entry point for the node-starter CLI.
- *
- * @example
- * ```ts
- * import { greet } from '@oclkadev/node-starter';
- *
- * greet('world'); // "Hello, world!"
- * ```
- */
+import { runCli } from '@/commands/index';
+import { formatErrorMessage, getErrorMessage } from '@/core/errors';
+import { io } from '@/ui/io';
 
-/**
- * Returns a greeting message for the given name.
- *
- * @param name - The name to greet.
- * @returns A formatted greeting string.
- * @public
- */
-export function greet(name: string): string {
-  return `Hello, ${name}!`;
-}
+void (async () => {
+  try {
+    await runCli();
+  } catch (error) {
+    const message = formatErrorMessage(getErrorMessage(error));
+    io.error(message);
+    process.exit(1);
+  }
+})();
