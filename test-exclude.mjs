@@ -1,4 +1,9 @@
-const ignores = [
+const exclude = [
+  '**/*.e2e-spec.ts',
+  'src/**/__e2e__/**',
+  'src/__tests__/**',
+  'src/**/__tests__/**',
+  'src/**/types/**',
   'src/commands/index.ts',
   'src/commands/options.ts',
   'src/commands/test/index.ts',
@@ -9,4 +14,4 @@ const ignores = [
   'src/index.ts',
 ];
 
-export default ignores;
+export default exclude;

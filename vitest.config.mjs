@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitest/config';
 
 import ignores from './ignores.mjs';
-import testIgnores from './test-ignores.mjs';
+import testExclude from './test-exclude.mjs';
 
 export default defineConfig({
   resolve: {
@@ -13,14 +13,7 @@ export default defineConfig({
       reporter: ['text', 'json', 'html', 'lcov'],
       all: false,
       include: ['src/**/*.ts'],
-      exclude: [
-        '**/*.e2e-spec.ts',
-        'src/__tests__/**',
-        'src/**/__tests__/**',
-        'src/**/__e2e__/**',
-        'src/**/types/**',
-        ...testIgnores,
-      ],
+      exclude: testExclude,
     },
     projects: [
       {

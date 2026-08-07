@@ -1,0 +1,38 @@
+// @ts-expect-error - Stryker config type not available at lint time
+// type: import('@stryker-mutator/api/core').PartialStrykerOptions
+
+import ignores from './ignores.mjs';
+import testExclude from './test-exclude.mjs';
+
+const sharedIgnorePatterns = ignores
+  .filter((p) => p.endsWith('/**'))
+  .map((p) => `/${p.replace('/**', '')}`);
+
+const config = {
+  testRunner: 'vitest',
+  reporters: ['html', 'clear-text', 'progress', 'dashboard', 'json'],
+  plugins: [
+    '@stryker-mutator/vitest-runner',
+    '@stryker-mutator/typescript-checker',
+  ],
+  timeoutMS: 240_000,
+  timeoutFactor: 3,
+  coverageAnalysis: 'perTest',
+  ignoreStatic: true,
+  incremental: true,
+  mutate: [
+    'src/**/*.ts',
+    ...testExclude.map((pattern) => `!${pattern}`),
+  ],
+  ignorePatterns: [...sharedIgnorePatterns],
+  thresholds: {
+    high: 95,
+    low: 80,
+    break: 65,
+  },
+  vitest: {
+    configFile: 'vitest.config.mjs',
+  },
+};
+
+export default config;

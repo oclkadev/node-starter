@@ -5,6 +5,7 @@
 .ops
 diff.md
 logs.md
+mutants.txt
 pr.md
 
 # Build
