@@ -1,5 +1,11 @@
 # @oclkadev/node-starter
 
+## 0.4.0
+
+### Minor Changes
+
+- 42e72e3: Add comprehensive testing infrastructure: Vitest with coverage, Stryker mutation testing with focus script, and E2E tests with execa
+
 ## 0.3.0
 
 ### Minor Changes

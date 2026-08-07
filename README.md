@@ -20,6 +20,7 @@
 - **Commit conventions** — [commitlint](https://commitlint.js.org/) + [commitizen](https://commitizen-tools.github.io/cz-cli/)
 - **Versioning** — [Changesets](https://github.com/changesets/changesets) for automated versioning and changelogs
 - **API docs** — [TypeDoc](https://typedoc.org/) for TSDoc-based API documentation generation
+- **CLI** — [Commander](https://github.com/tj/commander.js) with shared options (quiet, verbose, dry-run), centralized I/O layer ([picocolors](https://github.com/nicktomlin/picocolors), [figures](https://github.com/sindresorhus/figures), [text-table](https://github.com/substack/text-table)), and typed error handling (`AppError` with error codes)
 
 ## Prerequisites
 
@@ -52,6 +53,28 @@ pnpm dev
 pnpm build
 ```
 
+### CLI
+
+```bash
+# Run the CLI
+pnpm dev
+
+# Run a specific command
+pnpm dev test
+
+# Verbose output
+pnpm dev test -V
+
+# Quiet mode (suppress all output except errors)
+pnpm dev test -q
+
+# Dry-run mode
+pnpm dev test -n
+
+# Show version
+pnpm dev -v
+```
+
 ### Quality checks
 
 ```bash
@@ -79,6 +102,25 @@ pnpm check:build
 
 # Size check
 pnpm check:size
+```
+
+### Testing
+
+```bash
+# Run all tests with coverage
+pnpm test:coverage
+
+# Run e2e tests only
+pnpm test:e2e
+
+# Run mutation testing with Stryker
+pnpm test:mutate
+
+# Focus on a single file (coverage + mutation)
+pnpm test:focus commands/test/handler
+
+# Watch mode
+pnpm test:watch
 ```
 
 ### Formatting
@@ -124,8 +166,21 @@ node-starter/
 ├── .github/             # GitHub templates and workflows
 ├── .husky/              # Git hooks (pre-commit, commit-msg, pre-push)
 ├── docs/                # Documentation
+├── scripts/             # Utility scripts (test-focus)
 ├── src/
+│   ├── commands/        # CLI commands (Commander)
+│   │   ├── index.ts     # Root command and runCli()
+│   │   ├── options.ts   # Shared option definitions
+│   │   └── test/        # Test command
+│   ├── core/            # Core utilities
+│   │   ├── errors/      # AppError, ErrorCode, error helpers
+│   │   └── helpers/     # String helpers
+│   ├── ui/              # I/O layer (io singleton)
 │   └── index.ts         # Entry point
+├── tests/               # Test setup, helpers, and fixtures
+│   ├── e2e/             # E2E test helpers (run-cli)
+│   ├── unit/            # Unit test helpers (mock-tty)
+│   └── setup.ts         # Global test setup (console mocks)
 ├── .editorconfig        # Editor configuration
 ├── .gitignore
 ├── .markdownlint.json   # Markdownlint configuration
@@ -141,9 +196,12 @@ node-starter/
 ├── knip.config.mjs      # Knip configuration
 ├── package.json
 ├── pnpm-workspace.yaml  # pnpm workspace configuration
+├── stryker.config.mjs   # Stryker mutation testing config
+├── test-exclude.mjs     # Shared test exclusion patterns
 ├── tsconfig.json        # TypeScript configuration
 ├── tsup.config.ts       # tsup build configuration
-└── typedoc.json         # TypeDoc configuration
+├── typedoc.json         # TypeDoc configuration
+└── vitest.config.mjs    # Vitest configuration
 ```
 
 ## Scripts
@@ -163,6 +221,11 @@ node-starter/
 | `pnpm check:secrets` | Secret scan with gitleaks              |
 | `pnpm check:build`   | Build verification with publint + attw |
 | `pnpm check:size`    | Size check with size-limit             |
+| `pnpm test:coverage` | Run all tests with V8 coverage         |
+| `pnpm test:e2e`      | Run e2e tests only                     |
+| `pnpm test:mutate`   | Run Stryker mutation testing           |
+| `pnpm test:focus`    | Focus coverage + mutation on a file    |
+| `pnpm test:watch`    | Run tests in watch mode                |
 | `pnpm knip`          | Dead code detection                    |
 | `pnpm gen:docs`      | Generate API docs with TypeDoc         |
 | `pnpm commit`        | Interactive commit with commitizen     |

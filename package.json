@@ -1,6 +1,6 @@
 {
   "name": "@oclkadev/node-starter",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Fast TS starter for Node.js libraries and CLI tools.",
   "keywords": [
     "node",
@@ -62,11 +62,16 @@
   "scripts": {
     "build": "tsup src/index.ts",
     "dev": "NODE_ENV=development tsx src/index.ts",
+    "test:watch": "vitest run --watch",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "vitest run --project e2e",
+    "test:mutate": "stryker run",
+    "test:focus": "node scripts/test-focus.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:md": "markdownlint '**/*.md' --fix --ignore node_modules --ignore dist",
     "check:all": "pnpm check:fast && pnpm check:spell && pnpm lint:md && pnpm check:secrets && pnpm build  && pnpm check:size && pnpm check:build && true",
-    "check:fast": "pnpm check:types && pnpm lint:fix && pnpm knip && true",
+    "check:fast": "pnpm check:types && pnpm lint:fix && pnpm test:coverage && pnpm knip && true",
     "check:secrets": "gitleaks protect --staged --verbose",
     "check:types": "tsc --noEmit",
     "check:spell": "cspell '**/*.{ts,md,json,yml,yaml}' --no-progress --gitignore",
@@ -107,8 +112,13 @@
     "@changesets/cli": "^2.31.1",
     "@commitlint/config-conventional": "^21.2.0",
     "@size-limit/preset-small-lib": "^13.0.3",
+    "@stryker-mutator/api": "^9.6.1",
+    "@stryker-mutator/core": "^9.6.1",
+    "@stryker-mutator/typescript-checker": "^9.6.1",
+    "@stryker-mutator/vitest-runner": "^9.6.1",
     "@types/node": "^26.1.2",
     "@types/text-table": "^0.2.5",
+    "@vitest/coverage-v8": "^4.1.10",
     "commitizen": "^4.3.2",
     "commitlint": "^21.2.1",
     "cspell": "^10.0.1",
@@ -121,6 +131,7 @@
     "eslint-plugin-sonarjs": "^4.2.0",
     "eslint-plugin-tsdoc": "^0.5.2",
     "eslint-plugin-unicorn": "^73.0.0",
+    "execa": "^10.0.1",
     "gitleaks": "^1.0.0",
     "globals": "^17.9.0",
     "husky": "^9.1.7",
@@ -134,7 +145,8 @@
     "tsx": "^4.23.9",
     "typedoc": "^0.28.20",
     "typescript": "6.0.3",
-    "typescript-eslint": "^8.66.0"
+    "typescript-eslint": "^8.66.0",
+    "vitest": "^4.1.10"
   },
   "engines": {
     "node": ">=24"
