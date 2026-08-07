@@ -1,5 +1,5 @@
 {
-  "name": "@oclka/node-starter",
+  "name": "@oclkadev/node-starter",
   "version": "0.1.0",
   "description": "Fast TS starter for Node.js libraries and CLI tools.",
   "scripts": {
