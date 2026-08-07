@@ -2,15 +2,10 @@ import path from 'node:path';
 
 import { io } from '@/ui/io';
 
-beforeEach(() => {
-  vi.spyOn(console, 'log').mockImplementation(() => {});
-  vi.spyOn(console, 'warn').mockImplementation(() => {});
-  vi.spyOn(console, 'error').mockImplementation(() => {});
-});
+import { mockTTY } from '../../../tests/unit/helpers/mock-tty';
 
 afterEach(() => {
   io.reset();
-  vi.restoreAllMocks();
 });
 
 describe('configure', () => {
@@ -221,10 +216,7 @@ describe('json', () => {
 
 describe('link', () => {
   it('returns plain text when stdout is not TTY', () => {
-    Object.defineProperty(process.stdout, 'isTTY', {
-      value: false,
-      configurable: true,
-    });
+    mockTTY(false);
 
     const result = io.link('click here', 'https://example.com');
 
@@ -232,10 +224,7 @@ describe('link', () => {
   });
 
   it('returns ANSI escape sequence when stdout is TTY', () => {
-    Object.defineProperty(process.stdout, 'isTTY', {
-      value: true,
-      configurable: true,
-    });
+    mockTTY(true);
 
     const result = io.link('click here', 'https://example.com');
 
@@ -247,10 +236,7 @@ describe('link', () => {
 
 describe('fileLink', () => {
   it('returns relative path as link text when not TTY', () => {
-    Object.defineProperty(process.stdout, 'isTTY', {
-      value: false,
-      configurable: true,
-    });
+    mockTTY(false);
 
     const absolutePath = path.join(process.cwd(), 'src', 'index.ts');
     const result = io.fileLink(absolutePath);
@@ -259,10 +245,7 @@ describe('fileLink', () => {
   });
 
   it('returns ANSI link with file:// protocol when TTY', () => {
-    Object.defineProperty(process.stdout, 'isTTY', {
-      value: true,
-      configurable: true,
-    });
+    mockTTY(true);
 
     const absolutePath = path.join(process.cwd(), 'src', 'index.ts');
     const result = io.fileLink(absolutePath);

@@ -10,7 +10,6 @@ describe('testHandler', () => {
 
   afterEach(() => {
     io.reset();
-    vi.restoreAllMocks();
   });
 
   it('calls io.info with TEST when verbose is false', () => {

@@ -30,6 +30,7 @@ export default defineConfig({
           globals: true,
           environment: 'node',
           timeout: 10_000,
+          setupFiles: ['./tests/setup.ts'],
           exclude: [...ignores],
           include: ['src/**/*.spec.ts'],
         },
@@ -41,6 +42,7 @@ export default defineConfig({
           globals: true,
           environment: 'node',
           timeout: 30_000,
+          setupFiles: ['./tests/setup.ts'],
           exclude: [...ignores],
           include: ['src/**/*.e2e-spec.ts'],
           sequence: {
