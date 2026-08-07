@@ -112,7 +112,9 @@ function buildMutationText(sourceLines, replacement, location) {
     return {
       original: line,
       mutated:
-        line.slice(0, start.column - 1) + replacement + line.slice(end.column - 1),
+        line.slice(0, start.column - 1) +
+        replacement +
+        line.slice(end.column - 1),
     };
   }
 
@@ -146,7 +148,11 @@ function formatTestList(coveredBy, testNames) {
 
 function formatMutant(mutant, filePath, sourceLines, testNames) {
   const { mutatorName, replacement, location, coveredBy } = mutant;
-  const { original, mutated } = buildMutationText(sourceLines, replacement, location);
+  const { original, mutated } = buildMutationText(
+    sourceLines,
+    replacement,
+    location,
+  );
 
   const lines = [
     `[Survived] ${mutatorName}`,

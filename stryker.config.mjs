@@ -20,10 +20,7 @@ const config = {
   coverageAnalysis: 'perTest',
   ignoreStatic: true,
   incremental: true,
-  mutate: [
-    'src/**/*.ts',
-    ...testExclude.map((pattern) => `!${pattern}`),
-  ],
+  mutate: ['src/**/*.ts', ...testExclude.map((pattern) => `!${pattern}`)],
   ignorePatterns: [...sharedIgnorePatterns],
   thresholds: {
     high: 95,
