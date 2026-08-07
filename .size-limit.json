@@ -1,0 +1,12 @@
+[
+  {
+    "path": "dist/index.mjs",
+    "limit": "250 KB",
+    "ignore": []
+  },
+  {
+    "path": "dist/index.cjs",
+    "limit": "250 KB",
+    "ignore": []
+  }
+]

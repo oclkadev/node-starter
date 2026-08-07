@@ -2,7 +2,6 @@
 
 # Files
 .agent
-.devin
 .ops
 diff.md
 logs.md
@@ -10,6 +9,7 @@ pr.md
 
 # Build
 dist/
+docs/api/
 *.tsbuildinfo
 
 # Dependencies
