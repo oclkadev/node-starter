@@ -71,7 +71,7 @@
     "lint:fix": "eslint . --fix",
     "lint:md": "markdownlint '**/*.md' --fix --ignore node_modules --ignore dist",
     "check:all": "pnpm check:fast && pnpm check:spell && pnpm lint:md && pnpm check:secrets && pnpm build  && pnpm check:size && pnpm check:build && true",
-    "check:fast": "pnpm check:types && pnpm lint:fix && pnpm knip && true",
+    "check:fast": "pnpm check:types && pnpm lint:fix && pnpm test:coverage && pnpm knip && true",
     "check:secrets": "gitleaks protect --staged --verbose",
     "check:types": "tsc --noEmit",
     "check:spell": "cspell '**/*.{ts,md,json,yml,yaml}' --no-progress --gitignore",
