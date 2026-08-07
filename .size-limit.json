@@ -2,11 +2,11 @@
   {
     "path": "dist/index.mjs",
     "limit": "250 KB",
-    "ignore": []
+    "ignore": ["child_process", "fs", "node:*", "path"]
   },
   {
     "path": "dist/index.cjs",
     "limit": "250 KB",
-    "ignore": []
+    "ignore": ["child_process", "fs", "node:*", "path"]
   }
 ]

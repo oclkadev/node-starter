@@ -82,6 +82,7 @@ const eslintConfig = defineConfig([
     files: ['src/index.ts'],
     rules: {
       'unicorn/no-process-exit': 'off',
+      'unicorn/no-top-level-side-effects': 'off',
     },
   },
   {
