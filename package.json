@@ -2,29 +2,6 @@
   "name": "@oclkadev/node-starter",
   "version": "0.1.0",
   "description": "Fast TS starter for Node.js libraries and CLI tools.",
-  "scripts": {
-    "build": "tsup src/index.ts",
-    "dev": "NODE_ENV=development tsx src/index.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "lint:md": "markdownlint '**/*.md' --fix --ignore node_modules --ignore dist",
-    "check:all": "pnpm check:fast && pnpm check:spell && pnpm lint:md && pnpm check:secrets && pnpm build  && pnpm check:size && pnpm check:build && true",
-    "check:fast": "pnpm check:types && pnpm lint:fix && pnpm knip && true",
-    "check:secrets": "gitleaks protect --staged --verbose",
-    "check:types": "tsc --noEmit",
-    "check:spell": "cspell '**/*.{ts,md,json,yml,yaml}' --no-progress --gitignore",
-    "check:build": "publint && attw --pack",
-    "check:size": "size-limit",
-    "format": "prettier --write .",
-    "knip": "knip --config knip.config.mjs",
-    "prepare": "husky",
-    "commit": "cz"
-  },
-  "author": {
-    "name": "oclkadev",
-    "email": "hello@oclka.dev",
-    "url": "https://oclka.dev"
-  },
   "keywords": [
     "node",
     "nodejs",
@@ -43,15 +20,20 @@
     "command-line",
     "terminal"
   ],
+  "homepage": "https://github.com/oclkadev/node-starter#readme",
+  "bugs": {
+    "url": "https://github.com/oclkadev/node-starter/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "oclkadev",
+    "email": "hello@oclka.dev",
+    "url": "https://oclka.dev"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oclkadev/node-starter.git"
   },
-  "bugs": {
-    "url": "https://github.com/oclkadev/node-starter/issues"
-  },
-  "homepage": "https://github.com/oclkadev/node-starter#readme",
-  "license": "MIT",
   "type": "module",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
@@ -68,14 +50,50 @@
       }
     }
   },
+  "bin": {
+    "node-starter": "./dist/index.mjs"
+  },
   "files": [
     "LICENSE",
     "README.md",
     "dist",
     "docs"
   ],
-  "bin": {
-    "node-starter": "./dist/index.mjs"
+  "scripts": {
+    "build": "tsup src/index.ts",
+    "dev": "NODE_ENV=development tsx src/index.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:md": "markdownlint '**/*.md' --fix --ignore node_modules --ignore dist",
+    "check:all": "pnpm check:fast && pnpm check:spell && pnpm lint:md && pnpm check:secrets && pnpm build  && pnpm check:size && pnpm check:build && true",
+    "check:fast": "pnpm check:types && pnpm lint:fix && pnpm knip && true",
+    "check:secrets": "gitleaks protect --staged --verbose",
+    "check:types": "tsc --noEmit",
+    "check:spell": "cspell '**/*.{ts,md,json,yml,yaml}' --no-progress --gitignore",
+    "check:build": "publint && attw --pack",
+    "check:size": "size-limit",
+    "format": "prettier --write .",
+    "knip": "knip --config knip.config.mjs",
+    "prepare": "husky",
+    "commit": "cz",
+    "release": "pnpm build && changeset publish"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix"
+    ],
+    "*.md": [
+      "markdownlint --fix"
+    ],
+    "*.{ts,json,md,yml,yaml}": [
+      "prettier --write",
+      "cspell --no-must-find-files"
+    ]
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
@@ -109,21 +127,12 @@
     "typescript": "6.0.3",
     "typescript-eslint": "^8.66.0"
   },
-  "lint-staged": {
-    "*.ts": [
-      "eslint --fix"
-    ],
-    "*.md": [
-      "markdownlint --fix"
-    ],
-    "*.{ts,json,md,yml,yaml}": [
-      "prettier --write",
-      "cspell --no-must-find-files"
-    ]
-  },
-  "packageManager": "pnpm@11.20.0",
   "engines": {
     "node": ">=24"
+  },
+  "packageManager": "pnpm@11.20.0",
+  "publishConfig": {
+    "access": "public"
   },
   "sideEffects": false
 }
