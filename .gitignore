@@ -9,6 +9,7 @@ pr.md
 
 # Build
 dist/
+docs/api/
 *.tsbuildinfo
 
 # Dependencies

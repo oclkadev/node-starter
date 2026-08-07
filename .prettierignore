@@ -4,6 +4,7 @@
 .stryker-tmp/**
 coverage/**
 dist/**
+docs/api/**
 node_modules/**
 reports/**
 pnpm-lock.yaml

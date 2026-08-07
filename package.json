@@ -73,6 +73,7 @@
     "check:build": "publint && attw --pack",
     "check:size": "size-limit",
     "format": "prettier --write .",
+    "gen:docs": "typedoc",
     "knip": "knip --config knip.config.mjs",
     "prepare": "husky",
     "commit": "cz",
@@ -124,6 +125,7 @@
     "size-limit": "^13.0.3",
     "tsup": "^8.5.1",
     "tsx": "^4.23.9",
+    "typedoc": "^0.28.20",
     "typescript": "6.0.3",
     "typescript-eslint": "^8.66.0"
   },

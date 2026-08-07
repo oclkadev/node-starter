@@ -7,6 +7,7 @@ export default {
     '.vscode',
     'coverage',
     'dist',
+    'docs/api',
     'node_modules',
     'pnpm-lock.yaml',
   ],
