@@ -3,6 +3,7 @@
 import ignores from './ignores.mjs';
 import testExclude from './test-exclude.mjs';
 
+// Derive directory-level ignore patterns from glob patterns ending with /**
 const sharedIgnorePatterns = ignores
   .filter((p) => p.endsWith('/**'))
   .map((p) => `/${p.replace('/**', '')}`);
