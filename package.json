@@ -5,7 +5,12 @@
   "scripts": {
     "build": "tsup src/index.ts",
     "dev": "NODE_ENV=development tsx src/index.ts",
-    "format": "prettier --write ."
+    "check:all": "pnpm check:fast && pnpm check:secrets && pnpm build && true",
+    "check:fast": "pnpm check:types && pnpm knip && true",
+    "check:secrets": "gitleaks protect --staged --verbose",
+    "check:types": "tsc --noEmit",
+    "format": "prettier --write .",
+    "knip": "knip --config knip.config.mjs"
   },
   "author": {
     "name": "oclkadev",
@@ -71,6 +76,8 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/node": "^26.1.2",
+    "gitleaks": "^1.0.0",
+    "knip": "^6.32.0",
     "prettier": "^3.9.6",
     "tsup": "^8.5.1",
     "tsx": "^4.23.9",
