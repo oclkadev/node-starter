@@ -7,6 +7,6 @@ interface TestOptions {
 }
 
 export function testHandler(options: TestOptions): void {
-  const message = `TEST ${options.verbose ? '(verbose)' : ''}`;
+  const message = options.verbose ? 'TEST (verbose)' : 'TEST';
   io.info(message);
 }
