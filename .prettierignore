@@ -1,0 +1,9 @@
+.agent/**
+.husky/**
+.ops/**
+.stryker-tmp/**
+coverage/**
+dist/**
+node_modules/**
+reports/**
+pnpm-lock.yaml

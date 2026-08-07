@@ -4,7 +4,8 @@
   "description": "Fast TS starter for Node.js libraries and CLI tools.",
   "scripts": {
     "build": "tsup src/index.ts",
-    "dev": "NODE_ENV=development tsx src/index.ts"
+    "dev": "NODE_ENV=development tsx src/index.ts",
+    "format": "prettier --write ."
   },
   "author": {
     "name": "oclkadev",
@@ -70,6 +71,7 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/node": "^26.1.2",
+    "prettier": "^3.9.6",
     "tsup": "^8.5.1",
     "tsx": "^4.23.9",
     "typescript": "6.0.3"

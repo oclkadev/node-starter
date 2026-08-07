@@ -1,1 +1,1 @@
-console.log('node-starter')
+console.log('node-starter');
