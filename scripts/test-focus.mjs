@@ -24,7 +24,9 @@ function resolveBin(name) {
       accessSync(candidate, constants.X_OK);
 
       return candidate;
-    } catch {}
+    } catch {
+      // not executable or not found, try next directory
+    }
   }
 
   return name;
@@ -73,7 +75,9 @@ async function main() {
   if (!noMutate) {
     try {
       unlinkSync('reports/stryker-incremental.json');
-    } catch {}
+    } catch {
+      // file may not exist on first run, safe to ignore
+    }
 
     const mutateResult = spawnSync(
       PNPM,
