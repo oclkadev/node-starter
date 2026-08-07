@@ -20,6 +20,7 @@
 - **Commit conventions** — [commitlint](https://commitlint.js.org/) + [commitizen](https://commitizen-tools.github.io/cz-cli/)
 - **Versioning** — [Changesets](https://github.com/changesets/changesets) for automated versioning and changelogs
 - **API docs** — [TypeDoc](https://typedoc.org/) for TSDoc-based API documentation generation
+- **CLI** — [Commander](https://github.com/tj/commander.js) with shared options (quiet, verbose, dry-run), centralized I/O layer ([picocolors](https://github.com/nicktomlin/picocolors), [figures](https://github.com/sindresorhus/figures), [text-table](https://github.com/substack/text-table)), and typed error handling (`AppError` with error codes)
 
 ## Prerequisites
 
@@ -50,6 +51,28 @@ pnpm dev
 
 # Build for production
 pnpm build
+```
+
+### CLI
+
+```bash
+# Run the CLI
+pnpm dev
+
+# Run a specific command
+pnpm dev test
+
+# Verbose output
+pnpm dev test -V
+
+# Quiet mode (suppress all output except errors)
+pnpm dev test -q
+
+# Dry-run mode
+pnpm dev test -n
+
+# Show version
+pnpm dev -v
 ```
 
 ### Quality checks
@@ -125,6 +148,14 @@ node-starter/
 ├── .husky/              # Git hooks (pre-commit, commit-msg, pre-push)
 ├── docs/                # Documentation
 ├── src/
+│   ├── commands/        # CLI commands (Commander)
+│   │   ├── index.ts     # Root command and runCli()
+│   │   ├── options.ts   # Shared option definitions
+│   │   └── test/        # Test command
+│   ├── core/            # Core utilities
+│   │   ├── errors/      # AppError, ErrorCode, error helpers
+│   │   └── helpers/     # String helpers
+│   ├── ui/              # I/O layer (io singleton)
 │   └── index.ts         # Entry point
 ├── .editorconfig        # Editor configuration
 ├── .gitignore
