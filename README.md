@@ -19,6 +19,7 @@
 - **Git hooks** — [husky](https://typicode.github.io/husky/) with [lint-staged](https://github.com/lint-staged/lint-staged)
 - **Commit conventions** — [commitlint](https://commitlint.js.org/) + [commitizen](https://commitizen-tools.github.io/cz-cli/)
 - **Versioning** — [Changesets](https://github.com/changesets/changesets) for automated versioning and changelogs
+- **API docs** — [TypeDoc](https://typedoc.org/) for TSDoc-based API documentation generation
 
 ## Prerequisites
 
@@ -106,6 +107,15 @@ pnpm changeset
 pnpm changeset version
 ```
 
+### API documentation
+
+```bash
+# Generate API docs from TSDoc comments
+pnpm gen:docs
+```
+
+Output is generated in `docs/api/`.
+
 ## Project structure
 
 ```text
@@ -132,7 +142,8 @@ node-starter/
 ├── package.json
 ├── pnpm-workspace.yaml  # pnpm workspace configuration
 ├── tsconfig.json        # TypeScript configuration
-└── tsup.config.ts       # tsup build configuration
+├── tsup.config.ts       # tsup build configuration
+└── typedoc.json         # TypeDoc configuration
 ```
 
 ## Scripts
@@ -153,6 +164,7 @@ node-starter/
 | `pnpm check:build`   | Build verification with publint + attw |
 | `pnpm check:size`    | Size check with size-limit             |
 | `pnpm knip`          | Dead code detection                    |
+| `pnpm gen:docs`      | Generate API docs with TypeDoc         |
 | `pnpm commit`        | Interactive commit with commitizen     |
 
 ## License
