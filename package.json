@@ -8,11 +8,13 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:md": "markdownlint '**/*.md' --fix --ignore node_modules --ignore dist",
-    "check:all": "pnpm check:fast && pnpm check:spell && pnpm lint:md && pnpm check:secrets && pnpm build && true",
+    "check:all": "pnpm check:fast && pnpm check:spell && pnpm lint:md && pnpm check:secrets && pnpm build  && pnpm check:size && pnpm check:build && true",
     "check:fast": "pnpm check:types && pnpm lint:fix && pnpm knip && true",
     "check:secrets": "gitleaks protect --staged --verbose",
     "check:types": "tsc --noEmit",
     "check:spell": "cspell '**/*.{ts,md,json,yml,yaml}' --no-progress --gitignore",
+    "check:build": "publint && attw --pack",
+    "check:size": "size-limit",
     "format": "prettier --write .",
     "knip": "knip --config knip.config.mjs"
   },
@@ -74,6 +76,8 @@
     "node-starter": "./dist/index.mjs"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@size-limit/preset-small-lib": "^13.0.3",
     "@types/node": "^26.1.2",
     "cspell": "^10.0.1",
     "eslint": "^10.8.0",
@@ -89,6 +93,8 @@
     "knip": "^6.32.0",
     "markdownlint-cli": "^0.49.1",
     "prettier": "^3.9.6",
+    "publint": "^0.3.23",
+    "size-limit": "^13.0.3",
     "tsup": "^8.5.1",
     "tsx": "^4.23.9",
     "typescript": "6.0.3",
