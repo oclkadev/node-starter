@@ -1,6 +1,6 @@
 {
   "name": "@oclka/node-starter",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Fast TS starter for Node.js libraries and CLI tools.",
   "scripts": {
     "build": "tsup src/index.ts",
