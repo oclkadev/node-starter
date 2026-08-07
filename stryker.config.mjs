@@ -1,5 +1,4 @@
 // @ts-expect-error - Stryker config type not available at lint time
-// type: import('@stryker-mutator/api/core').PartialStrykerOptions
 
 import ignores from './ignores.mjs';
 import testExclude from './test-exclude.mjs';
