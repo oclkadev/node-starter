@@ -1,9 +1,9 @@
 const exclude = [
   '**/*.e2e-spec.ts',
   'src/**/__e2e__/**',
-  'src/__tests__/**',
   'src/**/__tests__/**',
   'src/**/types/**',
+  'src/__tests__/**',
   'src/commands/index.ts',
   'src/commands/options.ts',
   'src/commands/test/index.ts',

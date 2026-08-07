@@ -117,7 +117,7 @@ const eslintConfig = defineConfig([
       'cspell.config.mjs',
       'ignores.mjs',
       'knip.config.mjs',
-      'test-ignores.mjs',
+      'test-exclude.mjs',
     ],
     plugins: { perfectionist },
     rules: {
