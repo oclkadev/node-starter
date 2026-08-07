@@ -13,7 +13,7 @@ export function formatErrorMessage(message: string): string {
 
 export function getErrorMessage(error: unknown): string {
   if (error instanceof Error) {
-    return error.message;
+    return typeof error.message === 'string' ? error.message : 'Unknown error';
   }
 
   if (error && typeof error === 'object' && 'message' in error) {

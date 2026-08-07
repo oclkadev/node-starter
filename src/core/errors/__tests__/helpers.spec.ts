@@ -60,10 +60,10 @@ describe('getErrorMessage', () => {
     expect(getErrorMessage(new Error('boom'))).toBe('boom');
   });
 
-  it('returns raw message from Error with non-string message property', () => {
+  it('returns "Unknown error" for Error with non-string message property', () => {
     const err = new Error('placeholder');
     Object.defineProperty(err, 'message', { value: 42, configurable: true });
-    expect(getErrorMessage(err)).toBe(42 as unknown as string);
+    expect(getErrorMessage(err)).toBe('Unknown error');
   });
 
   it('returns message from object with string message property', () => {
