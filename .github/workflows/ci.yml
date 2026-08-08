@@ -165,7 +165,7 @@ jobs:
             stryker-incremental-main-
 
       - name: 🧬 Mutation Testing
-        run: pnpm stryker run --incremental --since origin/main
+        run: pnpm stryker run --incremental
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
