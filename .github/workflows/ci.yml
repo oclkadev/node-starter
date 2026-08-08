@@ -134,7 +134,6 @@ jobs:
     needs: [check]
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: vars.STRYKER_DASHBOARD_API_KEY != ''
     env:
       HUSKY: 0
 
