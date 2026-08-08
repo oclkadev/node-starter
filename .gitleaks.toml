@@ -1,0 +1,22 @@
+# Gitleaks configuration
+# https://github.com/gitleaks/gitleaks
+
+[extend]
+# Use default gitleaks rules
+useDefault = true
+
+[allowlist]
+description = "Allowlist for false positives"
+paths = [
+  # Test files and fixtures
+  '''tests/.*''',
+  '''__tests__/.*''',
+  '''__mocks__/.*''',
+  '''fixtures/.*''',
+  # Documentation and examples
+  '''examples/.*''',
+  '''docs/.*''',
+  '''.ops/.*''',
+  # GitHub Actions workflows (may contain placeholder secrets)
+  '''.github/workflows/.*''',
+]

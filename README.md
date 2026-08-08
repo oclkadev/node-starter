@@ -4,6 +4,15 @@
   <p>Fast TS starter for Node.js libraries and CLI tools.</p>
 </div>
 
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Foclkadev%2Fnode-starter%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/oclkadev/node-starter/main)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=coverage)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=bugs)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
+![CI](https://github.com/oclkadev/node-starter/actions/workflows/ci.yml/badge.svg)
+![Release](https://github.com/oclkadev/node-starter/actions/workflows/release.yml/badge.svg)
+
 ## Features
 
 - **TypeScript** — strict mode with advanced flags (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`)
@@ -21,6 +30,18 @@
 - **Versioning** — [Changesets](https://github.com/changesets/changesets) for automated versioning and changelogs
 - **API docs** — [TypeDoc](https://typedoc.org/) for TSDoc-based API documentation generation
 - **CLI** — [Commander](https://github.com/tj/commander.js) with shared options (quiet, verbose, dry-run), centralized I/O layer ([picocolors](https://github.com/nicktomlin/picocolors), [figures](https://github.com/sindresorhus/figures), [text-table](https://github.com/substack/text-table)), and typed error handling (`AppError` with error codes)
+
+## CI/CD
+
+| Workflow                          | Description                                                                                                            |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **CI** (`ci.yml`)                 | Type checking, linting, unit tests with coverage, secrets scanning, build, E2E tests, size limit, and mutation testing |
+| **Release** (`release.yml`)       | Automated versioning and publishing via Changesets with provenance                                                     |
+| **CodeQL** (`codeql.yml`)         | Static security analysis with weekly scheduled scans                                                                   |
+| **Docs** (`docs.yml`)             | TypeDoc API documentation generation and deployment to GitHub Pages                                                    |
+| **Stale** (`stale.yml`)           | Auto-close inactive issues and PRs after 30 days                                                                       |
+| **Size Limit** (`size-limit.yml`) | Bundle size diff comment on pull requests                                                                              |
+| **Dependabot** (`dependabot.yml`) | Weekly dependency updates for npm and GitHub Actions with grouped PRs                                                  |
 
 ## Prerequisites
 

@@ -1,0 +1,181 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: 🔍 Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      HUSKY: 0
+
+    steps:
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: 🏗️ Setup pnpm
+        uses: pnpm/action-setup@008330803749db0355799c700092d9a85fd074e9 # v6.0.9
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: 🔍 Check (types, lint, knip)
+        run: pnpm check:types && pnpm lint && pnpm knip
+
+      - name: 📝 Commitlint
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          pnpm commitlint --from origin/${{ github.base_ref }} --to HEAD
+
+      - name: 📝 Markdown Lint
+        run: pnpm lint:md
+
+      - name: 🔤 Spell Check
+        run: pnpm check:spell
+
+      - name: 🧪 Tests & Coverage
+        run: pnpm vitest run --coverage --project unit
+
+      - name: 🔐 Secrets Scan
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    name: 🏗️ Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      HUSKY: 0
+
+    steps:
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: 🏗️ Setup pnpm
+        uses: pnpm/action-setup@008330803749db0355799c700092d9a85fd074e9 # v6.0.9
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: 🏗️ Build
+        run: pnpm build
+
+      - name: 📤 Upload dist
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  verify:
+    name: ✅ Verify
+    needs: [check, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      HUSKY: 0
+
+    steps:
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: 🏗️ Setup pnpm
+        uses: pnpm/action-setup@008330803749db0355799c700092d9a85fd074e9 # v6.0.9
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: 📥 Download dist
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: 🧪 E2E Tests
+        run: pnpm test:e2e
+
+      - name: 📏 Size Limit
+        run: pnpm check:size
+
+      - name: 📦 Build Validation
+        run: pnpm check:build
+
+  mutation:
+    name: 🧬 Mutation
+    needs: [check]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: github.event_name != 'pull_request' || !contains(github.event.pull_request.labels.*.name, 'docs-only')
+    env:
+      HUSKY: 0
+
+    steps:
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: 🏗️ Setup pnpm
+        uses: pnpm/action-setup@008330803749db0355799c700092d9a85fd074e9 # v6.0.9
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: 📂 Restore Stryker Incremental Cache
+        uses: actions/cache@v4
+        with:
+          path: .stryker-tmp/incremental.json
+          key: stryker-incremental-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            stryker-incremental-${{ github.ref_name }}-
+            stryker-incremental-main-
+
+      - name: 🧬 Mutation Testing
+        run: pnpm stryker run --incremental
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+
+      - name: 📤 Upload Stryker Report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: stryker-report
+          path: reports/mutation/mutation.html
+          retention-days: 7
