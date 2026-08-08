@@ -4,6 +4,15 @@
   <p>Fast TS starter for Node.js libraries and CLI tools.</p>
 </div>
 
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Foclkadev%2Fnode-starter%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/oclkadev/node-starter/main)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=coverage)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=oclkadev_node-starter&metric=bugs)](https://sonarcloud.io/summary/new_code?id=oclkadev_node-starter)
+![CI](https://github.com/oclkadev/node-starter/actions/workflows/ci.yml/badge.svg)
+![Release](https://github.com/oclkadev/node-starter/actions/workflows/release.yml/badge.svg)
+
 ## Features
 
 - **TypeScript** — strict mode with advanced flags (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`)
