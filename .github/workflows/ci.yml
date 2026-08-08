@@ -159,7 +159,7 @@ jobs:
         run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: 📂 Restore Stryker Incremental Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .stryker-tmp/incremental.json
           key: stryker-incremental-${{ github.ref_name }}-${{ github.sha }}
