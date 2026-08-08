@@ -50,17 +50,10 @@ jobs:
       - name: 🧪 Tests & Coverage
         run: pnpm vitest run --coverage --project unit
 
-      - name: 📊 Upload Coverage
-        uses: codecov/codecov-action@v5
-        with:
-          files: ./coverage/coverage-final.json
-          fail_ci_if_error: false
-
       - name: 🔐 Secrets Scan
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
 
   build:
     name: 🏗️ Build
