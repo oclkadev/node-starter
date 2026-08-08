@@ -31,6 +31,18 @@
 - **API docs** — [TypeDoc](https://typedoc.org/) for TSDoc-based API documentation generation
 - **CLI** — [Commander](https://github.com/tj/commander.js) with shared options (quiet, verbose, dry-run), centralized I/O layer ([picocolors](https://github.com/nicktomlin/picocolors), [figures](https://github.com/sindresorhus/figures), [text-table](https://github.com/substack/text-table)), and typed error handling (`AppError` with error codes)
 
+## CI/CD
+
+| Workflow                          | Description                                                                                                            |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **CI** (`ci.yml`)                 | Type checking, linting, unit tests with coverage, secrets scanning, build, E2E tests, size limit, and mutation testing |
+| **Release** (`release.yml`)       | Automated versioning and publishing via Changesets with provenance                                                     |
+| **CodeQL** (`codeql.yml`)         | Static security analysis with weekly scheduled scans                                                                   |
+| **Docs** (`docs.yml`)             | TypeDoc API documentation generation and deployment to GitHub Pages                                                    |
+| **Stale** (`stale.yml`)           | Auto-close inactive issues and PRs after 30 days                                                                       |
+| **Size Limit** (`size-limit.yml`) | Bundle size diff comment on pull requests                                                                              |
+| **Dependabot** (`dependabot.yml`) | Weekly dependency updates for npm and GitHub Actions with grouped PRs                                                  |
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) >= 24
