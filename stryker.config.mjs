@@ -20,6 +20,8 @@ const config = {
   coverageAnalysis: 'perTest',
   ignoreStatic: true,
   incremental: true,
+  incrementalFile: '.stryker-tmp/incremental.json',
+  concurrency: 4,
   mutate: ['src/**/*.ts', ...testExclude.map((pattern) => `!${pattern}`)],
   ignorePatterns: [...sharedIgnorePatterns],
   thresholds: {
