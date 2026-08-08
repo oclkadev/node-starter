@@ -1,0 +1,173 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: 🔍 Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: 🏗️ Setup pnpm
+        uses: pnpm/action-setup@008330803749db0355799c700092d9a85fd074e9 # v6.0.9
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+        env:
+          HUSKY: 0
+
+      - name: 🔍 Check (types, lint, knip)
+        run: pnpm check:types && pnpm lint && pnpm knip
+        env:
+          HUSKY: 0
+
+      - name: 📝 Markdown Lint
+        run: pnpm lint:md
+        env:
+          HUSKY: 0
+
+      - name: 🔤 Spell Check
+        run: pnpm check:spell
+        env:
+          HUSKY: 0
+
+      - name: 🧪 Tests & Coverage
+        run: pnpm vitest run --coverage --project unit
+        env:
+          HUSKY: 0
+
+      - name: 🔐 Install gitleaks
+        run: curl --fail --proto =https --tlsv1.2 -sSL https://github.com/gitleaks/gitleaks/releases/download/v8.27.2/gitleaks_8.27.2_linux_x64.tar.gz | tar -xz -C /usr/local/bin gitleaks
+
+      - name: 🔐 Secrets Scan
+        run: pnpm check:secrets
+        env:
+          HUSKY: 0
+
+  build:
+    name: 🏗️ Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: 🏗️ Setup pnpm
+        uses: pnpm/action-setup@008330803749db0355799c700092d9a85fd074e9 # v6.0.9
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+        env:
+          HUSKY: 0
+
+      - name: 🏗️ Build
+        run: pnpm build
+        env:
+          HUSKY: 0
+
+      - name: 📤 Upload dist
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  verify:
+    name: ✅ Verify
+    needs: [check, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: 🏗️ Setup pnpm
+        uses: pnpm/action-setup@008330803749db0355799c700092d9a85fd074e9 # v6.0.9
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+        env:
+          HUSKY: 0
+
+      - name: 📥 Download dist
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: 🧪 E2E Tests
+        run: pnpm test:e2e
+        env:
+          HUSKY: 0
+
+      - name: 📏 Size Limit
+        run: pnpm check:size
+        env:
+          HUSKY: 0
+
+      - name: 📦 Build Validation
+        run: pnpm check:build
+        env:
+          HUSKY: 0
+
+  mutation:
+    name: 🧬 Mutation
+    needs: [check]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: 🏗️ Setup pnpm
+        uses: pnpm/action-setup@008330803749db0355799c700092d9a85fd074e9 # v6.0.9
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+        env:
+          HUSKY: 0
+
+      - name: 🧬 Mutation Testing
+        run: pnpm test:mutate
+        env:
+          HUSKY: 0
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
