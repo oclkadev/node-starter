@@ -36,6 +36,10 @@ jobs:
       - name: 🔍 Check (types, lint, knip)
         run: pnpm check:types && pnpm lint && pnpm knip
 
+      - name: 📝 Commitlint
+        if: github.event_name == 'pull_request'
+        run: pnpm commitlint --from origin/${{ github.base_ref }} --to HEAD
+
       - name: 📝 Markdown Lint
         run: pnpm lint:md
 
@@ -134,6 +138,7 @@ jobs:
     needs: [check]
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    if: github.event_name != 'pull_request' || !contains(github.event.pull_request.labels.*.name, 'docs-only')
     env:
       HUSKY: 0
 
